@@ -1,5 +1,5 @@
 <?php
-// Affichage des erreurs PHP (utile pour debug)
+// Affichage des erreurs PHP (debug)
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -11,7 +11,6 @@ require_once __DIR__ . '/bdd.php';
 $stmt = $pdo->query("SELECT * FROM article");
 $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -42,32 +41,43 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p>Découvrez l’ensemble de nos matériaux disponibles.</p>
     </section>
 
+    <!-- BARRE DE RECHERCHE -->
+    <div class="search-bar">
+        <input 
+            type="text" 
+            id="searchInput"
+            placeholder="Rechercher un matériau, une catégorie..."
+            autocomplete="off"
+        >
+    </div>
+
     <!-- ARTICLES -->
-    <section class="grid" style="margin-top:2rem;">
+    <section id="articles" class="grid">
+
         <?php if (count($articles) > 0): ?>
-
             <?php foreach ($articles as $a): ?>
-                <article class="card">
 
-                    <?php if (!empty($a['image'])): ?>
-                        <img
-                            class="thumb"
-                            src="images/<?= htmlspecialchars($a['image']) ?>"
-                            alt="<?= htmlspecialchars($a['nom']) ?>">
-                    <?php endif; ?>
+                <a href="article.php?id=<?= $a['id'] ?>" class="card-link">
+                    <article 
+                        class="card"
+                        data-nom="<?= strtolower($a['nom']) ?>"
+                        data-tag="<?= strtolower($a['mot_classement']) ?>"
+                    >
+                        <span class="tag">
+                            <?= htmlspecialchars($a['mot_classement']) ?>
+                        </span>
 
-                    <div class="content">
-                        <span class="tag"><?= htmlspecialchars($a['mot_classement']) ?></span>
+                        <div class="title">
+                            <?= htmlspecialchars($a['nom']) ?>
+                        </div>
+                    </article>
+                </a>
 
-                        <div class="title"><?= htmlspecialchars($a['nom']) ?></div>
-                    </div>
-
-                </article>
             <?php endforeach; ?>
-
         <?php else: ?>
             <p>Aucun article disponible pour le moment.</p>
         <?php endif; ?>
+
     </section>
 
 </main>

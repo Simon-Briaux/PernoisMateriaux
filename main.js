@@ -26,3 +26,24 @@ cards.forEach(card => {
     card.style.boxShadow = '0 10px 30px rgba(2,6,23,0.6)';
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("searchInput");
+    const cards = document.querySelectorAll(".card-link");
+
+    input.addEventListener("input", () => {
+        const query = input.value.toLowerCase().trim();
+
+        cards.forEach(cardLink => {
+            const card = cardLink.querySelector(".card");
+            const nom = card.dataset.nom;
+            const tag = card.dataset.tag;
+
+            const match =
+                nom.includes(query) ||
+                tag.includes(query);
+
+            cardLink.style.display = match ? "block" : "none";
+        });
+    });
+});

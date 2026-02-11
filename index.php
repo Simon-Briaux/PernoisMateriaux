@@ -31,7 +31,7 @@
         <h2>Articles</h2>
         <a href="articles.php" class="btn btn-all">Voir tout →</a>
     </div>
-
+    
     <!-- Section Articles -->
     <section id="articles" class="grid">
         <?php
