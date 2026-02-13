@@ -1,27 +1,27 @@
 <?php
-require_once "../bdd.php";
-session_start();
+    require_once "../bdd.php";
+    session_start();
 
-$error = "";
+    $error = "";
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        $username = $_POST["username"];
+        $password = $_POST["password"];
 
-    $stmt = $pdo->prepare("SELECT * FROM admin WHERE username = ?");
-    $stmt->execute([$username]);
-    $admin = $stmt->fetch();
+        $stmt = $pdo->prepare("SELECT * FROM admin WHERE username = ?");
+        $stmt->execute([$username]);
+        $admin = $stmt->fetch();
 
-    if ($admin && password_verify($password, $admin["password"])) {
-        $_SESSION["admin_id"] = $admin["id"];
-        $_SESSION["admin_username"] = $admin["username"];
+        if ($admin && password_verify($password, $admin["password"])) {
+            $_SESSION["admin_id"] = $admin["id"];
+            $_SESSION["admin_username"] = $admin["username"];
 
-        header("Location: dashboard.php");
-        exit();
-    } else {
-        $error = "Identifiants incorrects";
+            header("Location: dashboard.php");
+            exit();
+        } else {
+            $error = "Identifiants incorrects";
+        }
     }
-}
 ?>
 
 <?php $pageTitle = "Connexion Admin"; require_once "../header.php"; ?>
