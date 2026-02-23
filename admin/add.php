@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nom = $_POST["nom"];
     $mot_classement = $_POST["mot_classement"];
 
-    $stmt = $pdo->prepare("INSERT INTO artice (nom, mot_classement) VALUES (?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO article (nom, mot_classement) VALUES (?, ?)");
     $stmt->execute([$nom, $mot_classement]);
 
     header("Location: dashboard.php");

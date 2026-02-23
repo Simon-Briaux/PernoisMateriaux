@@ -5,7 +5,7 @@ require_once "../includes/bdd.php";
 
 $id = $_GET["id"];
 
-$stmt = $pdo->prepare("SELECT * FROM artice WHERE id = ?");
+$stmt = $pdo->prepare("SELECT * FROM article WHERE id = ?");
 $stmt->execute([$id]);
 $article = $stmt->fetch();
 
@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nom = $_POST["nom"];
     $mot_classement = $_POST["mot_classement"];
 
-    $stmt = $pdo->prepare("UPDATE artice SET nom = ?, mot_classement = ? WHERE id = ?");
+    $stmt = $pdo->prepare("UPDATE article SET nom = ?, mot_classement = ? WHERE id = ?");
     $stmt->execute([$nom, $mot_classement, $id]);
 
     header("Location: dashboard.php");
